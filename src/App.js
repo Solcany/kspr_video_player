@@ -1,23 +1,14 @@
-import logo from './logo.svg';
+import VideoElement from './components/VideoElement/VideoElement'
 import './App.css';
+
+import video from './data/video.mp4'
+import poster from './data/poster.jpg'
+import response from './data/response.json'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <VideoElement objectsData={response} src={video} poster={poster} width="1280" height="720" autoplay={false}/>
     </div>
   );
 }
