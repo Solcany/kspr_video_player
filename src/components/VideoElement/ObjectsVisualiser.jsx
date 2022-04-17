@@ -1,9 +1,13 @@
+import useWindowDimensions from './hooks/useWindowDimensions'
 import './ObjectsVisualiser.scss'
 
 const ObjectsVisualiser = (props) => {
 	const {objectsData} = props;
 	const tags = objectsData.analysis_results.other_tags
-	
+  	const { height, width } = useWindowDimensions();
+  	const video_time = 300.0 // seconds
+
+  	const rerange = (value, x1, y1, x2, y2) => (value - x1) * (y2 - x2) / (y1 - x1) + x2;
 
 	const select_keys = (array, keys_to_keep) => array.map(obj => keys_to_keep.reduce((acc, curr) => {
 	  acc[curr] = obj[curr];
@@ -38,16 +42,39 @@ const ObjectsVisualiser = (props) => {
 
 	data = group_by_key(data, "start_time")
 
+	// prepare html
+	var html = []
+
+	Object.keys(data).forEach((key, index) => {
+		const l = rerange(key, 0, video_time, 0, width);
+		const tags = data[key]
+
+		var tags_html = []
+		tags.forEach((tag)=> {
+			console.log(tag)
+			tags_html.push(
+				<span>{tag.tag_name}</span>
+				)
+		})
+		html.push(
+			<li style={{ left: l + 'px' }}>
+				{tags_html}
+			</li>)
+	})
+
 	return(
 		<div>
 			<ul>
-			{tags.map((d) => {
+			{html.map((d) => {
+				return (d)
+			})}
+{/*			{tags.map((d) => {
 				return (
 					<li key={d.id}> 
 					<span>{d.tag_name} </span>
 					<span>{d.start_time}</span>
 					</li>)
-			})}
+			})}*/}
 			</ul>
 		</div>
 	)
