@@ -1,11 +1,12 @@
 import useWindowDimensions from './hooks/useWindowDimensions'
-import './ObjectsVisualiser.scss'
+import './TagsTimeline.scss'
 
-const ObjectsVisualiser = (props) => {
-	const {objectsData} = props;
-	const tags = objectsData.analysis_results.other_tags
+const TagsTimeline = (props) => {
+	const {response, tagsKey} = props;
+
+	const tags = response.analysis_results[tagsKey];
+  	const video_duration = response.video_info.length_sec;
   	const { height, width } = useWindowDimensions();
-  	const video_time = 300.0 // seconds
 
   	const rerange = (value, x1, y1, x2, y2) => (value - x1) * (y2 - x2) / (y1 - x1) + x2;
 
@@ -42,12 +43,13 @@ const ObjectsVisualiser = (props) => {
 	})
 
 	// create absolute positions of the tags timeline
+	const offset = 20;
 	var positions = data_as_arr.map((obj) => {
-		return rerange(parseFloat(obj.start_time),0,video_time,0,width);
+		return rerange(parseFloat(obj.start_time),0,video_duration,0,width) + offset;
 	})
 
 	// adjust the positions so that the rendered tags don't overlap
-	const min_dist = 20;
+	const min_dist = 15;
 	var adjusted_positions = []
 		// the first tag doesn't need to be adjusted, add it to the new arr
 		adjusted_positions.push(positions[0])
@@ -65,9 +67,6 @@ const ObjectsVisualiser = (props) => {
 		}
 	}
 
-
-	console.log(adjusted_positions)
-
 	// add the positions to the data array
 	const data_final = data_as_arr.map((obj, index) => {
 		let new_obj = obj
@@ -75,18 +74,6 @@ const ObjectsVisualiser = (props) => {
 		new_obj["pos"] = pos
 		return new_obj
 	})
-
-	// prepare html
-	// const html = data_final.map((obj) => {
-	// 	const pos = obj["pos"]
-	// 	const tags = data["tags"]
-	// 	const tags_html = tags.map((tag)=> {
-	// 							return <span>{tag.tag_name}</span>
-	// 						})
-	// 	return (<li style={{ left: l + 'px' }}>
-	// 			{tags_html}
-	// 		   </li>)
-	// })
 
 	return(
 		<div>
@@ -108,4 +95,4 @@ const ObjectsVisualiser = (props) => {
 	)
 }
 
-export default ObjectsVisualiser
+export default TagsTimeline

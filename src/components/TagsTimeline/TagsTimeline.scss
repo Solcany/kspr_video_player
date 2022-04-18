@@ -2,7 +2,6 @@ ul {
 	position: relative;
 	width: 100%;
 	height: 300px;
-	background-color: tomato;
 	padding: 0;
 
 	li {
@@ -10,15 +9,15 @@ ul {
 		display: table;
 		width: 5px;
 		height: 5px;
-		background-color: green;
 		top: 20px;
 		transform-origin: top left;
-
 		transform: rotate(90deg);
-
+		border-spacing:5px;
 		span {
+			background-color: tomato;
 			display: table-cell;
 			white-space: nowrap;
+			margin-right: 10px;
 		}
 	}
 }

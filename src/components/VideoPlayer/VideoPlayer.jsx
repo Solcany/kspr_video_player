@@ -1,11 +1,11 @@
 import useVideoPlayer from "./hooks/UseVideoPlayer";
 import React, {useRef} from "react";
-import "./VideoElement.scss";
+import "./VideoPlayer.scss";
 
-import ObjectsVisualiser from './ObjectsVisualiser'
+import TagsFilter from '../TagsFilter/TagsFilter'
 
-const VideoElement = (props) => {
-  const videoElement = useRef("null");
+const VideoPlayer = (props) => {
+  const videoPlayer = useRef("null");
 
   const {
     playerState,
@@ -14,7 +14,7 @@ const VideoElement = (props) => {
     handleVideoProgress,
     handleVideoSpeed,
     toggleMute,
-  } = useVideoPlayer(videoElement);
+  } = useVideoPlayer(videoPlayer);
 
   const {
     isPlaying,
@@ -24,7 +24,7 @@ const VideoElement = (props) => {
     } = playerState;
 
   const {
-    objectsData,
+    response,
     src,
     poster,
     width,
@@ -55,7 +55,7 @@ const VideoElement = (props) => {
     <div className="video-container">
       <div className="video-wrapper">
         <video
-          ref={videoElement}
+          ref={videoPlayer}
           poster={poster}
           width={width}
           height={height}
@@ -100,10 +100,11 @@ const VideoElement = (props) => {
           </button>
         </div>
       </div>
-      <ObjectsVisualiser objectsData={objectsData}/>
+
+      <TagsFilter response={response} default_key="other_tags"/>
     </div>
   );
 };
 
 
-export default VideoElement;
+export default VideoPlayer;
