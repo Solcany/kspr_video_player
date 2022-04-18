@@ -14,67 +14,95 @@ const ObjectsVisualiser = (props) => {
 	  return acc;
 	}, {}));
 
-	const keys_to_keep = ['id', 'tag_name', 'start_time', 'end_time'];
-	var data = select_keys(tags, keys_to_keep)
-
-	const sort_by_key_ascending = (array, key) => {
-	    return array.sort((a, b) => {
-	        var x = a[key]; 
-	        var y = b[key];
-	        if(x < y) {
-	        	return -1 // sort a before b
-	        } else if(x > y) {
-	        	return 1 // sort b before a
-	        } else {
-	        	return 0 // equality
-	        }
-	    })
-	};
-
-	data = sort_by_key_ascending(data, 'start_time')
-
 	const group_by_key = (array, key) => {
 	    return array.reduce((acc, curr) => {
 	        acc[curr[key]] = acc[curr[key]] || [];
 	        acc[curr[key]].push(curr);
 	        return acc;
-	    }, {})};	
+	    }, {})};
 
+	var sort_numerical_strings = (array) => {
+		return array.sort((a, b) => {
+			return parseFloat(a) - parseFloat(b);
+		})
+	}
+
+	const keys_to_keep = ['id', 'tag_name', 'start_time', 'end_time'];
+	var data = select_keys(tags, keys_to_keep)
+
+	// group all the tags by start_time
 	data = group_by_key(data, "start_time")
 
-	// prepare html
-	var html = []
+	// sort them in ascending order
+	const keys = sort_numerical_strings(Object.keys(data).sort())
 
-	Object.keys(data).forEach((key, index) => {
-		const l = rerange(key, 0, video_time, 0, width);
-		const tags = data[key]
-
-		var tags_html = []
-		tags.forEach((tag)=> {
-			console.log(tag)
-			tags_html.push(
-				<span>{tag.tag_name}</span>
-				)
-		})
-		html.push(
-			<li style={{ left: l + 'px' }}>
-				{tags_html}
-			</li>)
+	// convert object to array
+	var data_as_arr = keys.map((key) => {
+		return {start_time: key, tags: data[key]}
 	})
+
+	// create absolute positions of the tags timeline
+	var positions = data_as_arr.map((obj) => {
+		return rerange(parseFloat(obj.start_time),0,video_time,0,width);
+	})
+
+	// adjust the positions so that the rendered tags don't overlap
+	const min_dist = 20;
+	var adjusted_positions = []
+		// the first tag doesn't need to be adjusted, add it to the new arr
+		adjusted_positions.push(positions[0])
+	// start looping at the 2nd element
+	for(let i = 1; i < positions.length; i++) {
+		const curr_pos = positions[i];
+		const prev_pos = adjusted_positions[i-1];
+
+		if(min_dist > curr_pos - prev_pos) {
+			const new_dist = min_dist - (curr_pos - prev_pos); 
+			const new_pos = curr_pos + new_dist;
+			adjusted_positions.push(new_pos)
+		} else {
+			adjusted_positions.push(curr_pos)
+		}
+	}
+
+
+	console.log(adjusted_positions)
+
+	// add the positions to the data array
+	const data_final = data_as_arr.map((obj, index) => {
+		let new_obj = obj
+		const pos = adjusted_positions[index]		
+		new_obj["pos"] = pos
+		return new_obj
+	})
+
+	// prepare html
+	// const html = data_final.map((obj) => {
+	// 	const pos = obj["pos"]
+	// 	const tags = data["tags"]
+	// 	const tags_html = tags.map((tag)=> {
+	// 							return <span>{tag.tag_name}</span>
+	// 						})
+	// 	return (<li style={{ left: l + 'px' }}>
+	// 			{tags_html}
+	// 		   </li>)
+	// })
 
 	return(
 		<div>
 			<ul>
-			{html.map((d) => {
-				return (d)
-			})}
-{/*			{tags.map((d) => {
-				return (
-					<li key={d.id}> 
-					<span>{d.tag_name} </span>
-					<span>{d.start_time}</span>
-					</li>)
-			})}*/}
+				{data_final.map((obj) => {
+					const pos = obj["pos"]
+					const tags = obj["tags"]
+					const tags_html = tags.map((tag)=> {
+								return <span>{tag.tag_name}</span>
+							})
+					return (
+							<li style={{ left: pos + 'px' }}>
+								{tags_html}
+			   				</li>
+			   				)
+				})}
 			</ul>
 		</div>
 	)

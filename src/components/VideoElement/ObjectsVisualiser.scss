@@ -7,9 +7,18 @@ ul {
 
 	li {
 		position: absolute;
+		display: table;
 		width: 5px;
 		height: 5px;
 		background-color: green;
 		top: 20px;
+		transform-origin: top left;
+
+		transform: rotate(90deg);
+
+		span {
+			display: table-cell;
+			white-space: nowrap;
+		}
 	}
 }
