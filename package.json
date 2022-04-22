@@ -2,7 +2,7 @@
   "name": "kspr_video_player",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://matussolcany.com/kspr_video_player",
+  "homepage": "/",
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^12.1.4",
