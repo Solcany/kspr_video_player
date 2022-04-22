@@ -2,3 +2,4 @@ node_modules
 for_matus
 .DS_Store
 *.mp4
+build/

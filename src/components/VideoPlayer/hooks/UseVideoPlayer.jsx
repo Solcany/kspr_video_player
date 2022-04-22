@@ -30,7 +30,7 @@ const useVideoPlayer = (videoElement) => {
   }, [playerState.isPlaying, videoElement]);
 
   const handleOnTimeUpdate = () => {
-    const progress = (videoElement.current.currentTime / videoElement.current.duration) * 100;
+    const progress = (videoElement.current.currentTime / videoElement.current.duration) * 1000;
     setPlayerState({
       ...playerState,
       progress,
@@ -39,7 +39,7 @@ const useVideoPlayer = (videoElement) => {
   
   const handleVideoProgress = (event) => {
     const manualChange = Number(event.target.value);
-    videoElement.current.currentTime = (videoElement.current.duration / 100) * manualChange;
+    videoElement.current.currentTime = (videoElement.current.duration / 1000) * manualChange;
     setPlayerState({
       ...playerState,
       progress: manualChange,

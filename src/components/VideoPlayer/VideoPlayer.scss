@@ -1,113 +1,153 @@
+$grey: #C4C4C4;
+$light-grey: #EEEEEE;
+$dark-grey: #616161;
+$orange: #FF7D34;
+
 .video-container {
-    // display: flex;
-    // justify-content: center;
-    // align-items: center;
-    //height: 100vh;
-
     .video-wrapper {
-
-      video {
-        background-color: red;
-        width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      background-color: $grey;
+      video { 
+        width: 50%;
       }
       .controls {
-        .play-btn {
-          width: 50px;
+        width: 100%;
+        background-color: $light-grey;
+
+        .actions {
+          display: flex;
+          justify-content: center;
+
+          .btn {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-left: 1px solid $dark-grey;            
+            box-sizing: border-box;
+            outline: 0;
+
+            &:hover {
+              background-color: $grey;
+              cursor: pointer;                            
+            }
+
+            &.mute-btn {
+              border-right: 1px solid $dark-grey;
+            }
+          }
+        }
+        select.velocity {
+          width: 100px;
           height: 50px;
-          background-color: red;
+          font-family: sans-serif;
+          font-size: 22px;
+          border: none;
+          border-right: 1px solid $dark-grey;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+          background: url('../../static/svg/dropdown.svg') 96% / 15% no-repeat $light-grey;
+
+          &:focus {
+            outline: none;
+          }
+
+          &:hover {
+            cursor: pointer;
+            background-color: $grey;
+          }            
+        }
+        select::-ms-expand {
+            display: none; 
+        }
+
+        input[type="range"].timeline {
+          -webkit-appearance: none;  
+          appearance: none;        
+          margin: 0;
+          padding-bottom: 0;
+          padding-left: 30px;
+          padding-right: 30px;
+          background-color: $light-grey;
+          box-sizing: border-box;
+          width: 100%;
+          display: block;
+          height: 10px;
+
+          &:hover {
+            cursor: pointer;
+          }           
+
+          &::-moz-range-thumb {
+            height: 10px;
+            width: 20px;
+            -webkit-appearance: none;
+            box-shadow: none;
+            border: none;
+            background-color: $orange; 
+            background-clip: content-box;
+            padding: 7px;
+
+            &:hover {
+              cursor: pointer;
+              height: 15px;
+              width: 30px;
+            }            
+          }
+
+          &::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            box-shadow: none;
+            border: none;
+            height: 10px;
+            width: 20px;            
+            background-color: $orange; 
+
+            &:hover {
+              cursor: pointer;
+              margin: -2px;
+              height: 15px;
+              width: 30px;
+            }               
+          }
+          &::-ms-thumb {   
+            height: 10px;
+            width: 20px;
+            -webkit-appearance: none;
+            box-shadow: none;
+            border: none;
+            background-color: $orange; 
+            background-clip: content-box;
+            padding: 7px;
+
+            &:hover {
+              cursor: pointer;
+              height: 15px;
+              width: 30px;
+            }  
+          }
+          &::-webkit-slider-runnable-track {
+            height: 10px;
+            box-shadow: none;
+            border: none;
+            background-color: $dark-grey; 
+          }
+          &::-moz-range-track {
+            height: 10px;
+            box-shadow: none;
+            border: none;
+            background-color: $dark-grey; 
+          }
+          &::-ms-track {
+            height: 10px;
+            box-shadow: none;
+            border: none;
+            background-color: $dark-grey; 
+          }
         }
       }      
-
     }
   }
-  
-  
-
-  
-  // .video-wrapper {
-  //   width: 100%;
-  //   max-width: 700px;
-  //   position: relative;
-  //   display: flex;
-  //   justify-content: center;
-  //   overflow: hidden;
-  //   border-radius: 10px;
-  // }
-  
-  // .video-wrapper:hover .controls {
-  //   transform: translateY(0%);
-  // }
-  
-  // .controls {
-  //   display: flex;
-  //   align-items: center;
-  //   justify-content: space-evenly;
-  //   position: absolute;
-  //   bottom: 30px;
-  //   padding: 14px;
-  //   width: 100%;
-  //   max-width: 500px;
-  //   flex-wrap: wrap;
-  //   background: rgba(255, 255, 255, 0.25);
-  //   box-shadow: 0 8px 32px 0 rgba(255, 255, 255, 0.1);
-  //   backdrop-filter: blur(4px);
-  //   -webkit-backdrop-filter: blur(4px);
-  //   border-radius: 10px;
-  //   border: 1px solid rgba(255, 255, 255, 0.18);
-  //   transform: translateY(150%);
-  //   transition: all 0.3s ease-in-out;
-  // }
-  
-  // .actions button {
-  //   background: none;
-  //   border: none;
-  //   outline: none;
-  //   cursor: pointer;
-  // }
-  
-  // .actions button i {
-  //   background-color: none;
-  //   color: white;
-  //   font-size: 30px;
-  // }
-  
-  // input[type="range"] {
-  //   -webkit-appearance: none !important;
-  //   background: rgba(255, 255, 255, 0.2);
-  //   border-radius: 20px;
-  //   height: 4px;
-  //   width: 350px;
-  // }
-  
-  // input[type="range"]::-webkit-slider-thumb {
-  //   -webkit-appearance: none !important;
-  //   cursor: pointer;
-  //   height: 6px;
-  // }
-  
-  // input[type="range"]::-moz-range-progress {
-  //   background: white;
-  // }
-  
-  // .velocity {
-  //   appearance: none;
-  //   background: none;
-  //   color: white;
-  //   outline: none;
-  //   border: none;
-  //   text-align: center;
-  //   font-size: 16px;
-  // }
-  
-  // .mute-btn {
-  //   background: none;
-  //   border: none;
-  //   outline: none;
-  //   cursor: pointer;
-  // }
-  
-  // .mute-btn i {
-  //   background-color: none;
-  //   color: white;
-  //   font-size: 20px;
-  // }

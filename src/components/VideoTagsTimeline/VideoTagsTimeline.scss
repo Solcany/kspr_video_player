@@ -1,0 +1,40 @@
+$grey: #C4C4C4;
+$light-grey: #EEEEEE;
+
+.video-tags-timeline {
+  width: 100%;
+  padding: 0 30px; 
+  box-sizing: border-box;
+  background-color: $light-grey;
+
+  select.analysis-results-select {
+    width: 180px;
+    height: 50px;
+    font-family: sans-serif;
+    font-size: 22px;
+    border: none;
+    border-left: 1px solid #949494;      
+    border-right: 1px solid #949494;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url('../../static/svg/dropdown.svg') 96% / 10% no-repeat $light-grey;
+
+    option {
+      border-radius: 0;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: $grey;
+    }        
+  }
+
+  select::-ms-expand {
+      display: none; /* Remove default arrow in Internet Explorer 10 and 11 */
+  }
+}

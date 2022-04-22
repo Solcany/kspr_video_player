@@ -1,7 +1,5 @@
 import VideoPlayer from './components/VideoPlayer/VideoPlayer'
 
-import './App.css';
-
 import video from './data/video.mp4'
 import poster from './data/poster.jpg'
 import response from './data/response.json'
